@@ -77,6 +77,7 @@ The architecture follows a **Warm Standby Disaster Recovery strategy** using two
 - **Jenkins-Pipeline-Code/** – CI/CD pipeline scripts  
 - **docker-compose.yaml** – Local development setup  
 - **architecture.gif** – Architecture diagram  
+- **README.md
 
 ------------------------------------------------------------
 
