@@ -67,17 +67,16 @@ The architecture follows a **Warm Standby Disaster Recovery strategy** using two
 
 ## 📁 Project Structure
 
-backend/                    Node.js backend application  
-client/                     React frontend application  
-mysql/                      Database scripts  
-rds/                        RDS related configuration  
-terraform_main_ec2/         EC2 & networking automation  
-eks-terraform/              Kubernetes setup (optional)  
-kubernetes-files/           Kubernetes manifests  
-Jenkins-Pipeline-Code/      CI/CD pipeline scripts  
-docker-compose.yaml         Local development setup  
-architecture.gif            Architecture diagram  
-README.md
+- **backend/** – Node.js backend application  
+- **client/** – React frontend application  
+- **mysql/** – Database scripts  
+- **rds/** – RDS related configuration  
+- **terraform_main_ec2/** – EC2 & networking automation  
+- **eks-terraform/** – Kubernetes setup (optional)  
+- **kubernetes-files/** – Kubernetes manifests  
+- **Jenkins-Pipeline-Code/** – CI/CD pipeline scripts  
+- **docker-compose.yaml** – Local development setup  
+- **architecture.gif** – Architecture diagram  
 
 ------------------------------------------------------------
 
