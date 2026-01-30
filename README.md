@@ -1,96 +1,72 @@
-# Highly Available AWS Multi-Region 3-Tier Architecture
+# 🚀 3-Tier Application on AWS
 
-This repository demonstrates the design and deployment of a highly available, scalable, and secure 3-tier application architecture on AWS using real-world DevOps and Cloud best practices.
-
-The application is structured into three layers: Presentation, Application, and Database, and is deployed using Infrastructure as Code, CI/CD pipelines, and containerization.
-
-------------------------------------------------------------
-
-Architecture Overview
-
-![Architecture Diagram](architecture.gif)
+This repository is created to learn and deploy a 3-tier application on AWS Cloud.  
+The project follows a simple architecture consisting of Presentation Layer, Application Layer, and Database Layer.
 
 ------------------------------------------------------------
 
-Tech Stack
+## 🏠 Architecture
 
-Application:
-- React.js
+![Architecture of the application](architecture.gif)
+
+------------------------------------------------------------
+
+## 🧰 Tech Stack
+
+- React
 - Node.js
 - MySQL
 
-Cloud & DevOps:
-- AWS (EC2, VPC, RDS, ALB, Route 53)
-- Terraform (Infrastructure as Code)
-- Docker & Docker Compose
-- Kubernetes (EKS)
-- Jenkins (CI/CD)
-- PM2 (Node.js Process Manager)
+------------------------------------------------------------
+
+## 📌 Project Overview
+
+This project includes the following components:
+
+1. MySQL database hosted on Amazon RDS inside private subnets  
+2. Backend application deployed on a private EC2 instance  
+3. Frontend application deployed on a separate EC2 instance  
+4. Two Target Groups and two Application Load Balancers:
+   - One for frontend
+   - One for backend  
+5. Load Balancers are deployed in public subnets and configured as internet-facing  
 
 ------------------------------------------------------------
 
-Project Structure
+## ⚙️ Backend Setup
 
-Highly-Available-AWS-Multi-Region-3-Tier-Architecture
-
-backend/                    Node.js backend service  
-client/                     React frontend  
-mysql/                      Database scripts  
-rds/                        RDS configuration  
-terraform_main_ec2/         Terraform for EC2-based infrastructure  
-eks-terraform/              Terraform for EKS cluster  
-kubernetes-files/           Kubernetes manifests  
-Jenkins-Pipeline-Code/      Jenkins CI/CD pipelines  
-docker-compose.yaml         Docker Compose setup  
-architecture.gif            Architecture diagram  
-README.md
-
-------------------------------------------------------------
-
-Prerequisites
-
-- AWS Account
-- Terraform installed
-- Node.js installed (https://nodejs.org)
-- Docker & Docker Compose (optional)
-- Basic knowledge of AWS and Linux
-
-------------------------------------------------------------
-
-High-Level Deployment Flow
-
-1. Create VPC with public and private subnets
-2. Deploy MySQL RDS in private subnets
-3. Launch backend servers in private subnets
-4. Configure Application Load Balancers in public subnets
-5. Deploy frontend using Apache web server
-6. Connect frontend to backend and database
-7. Automate deployments using Terraform and Jenkins
-
-------------------------------------------------------------
-
-Backend Setup
-
-1. Clone Repository
+### Step 1: Connect to Backend Server
 
 git clone https://github.com/RKVankini/Highly-Available-AWS-Multi-Region-3-Tier-Architecture.git
+
 cd backend
 
-2. Configure Environment Variables
+------------------------------------------------------------
 
-Create .env file inside backend directory
+### Step 2: Configure Database Connection
 
-DB_HOST=your-rds-endpoint
-DB_USERNAME=admin
-DB_PASSWORD=your_password
+Create a `.env` file inside the backend directory.
+
+Path: backend/.env
+
+
+Add the following content:
+
+DB_HOST=book.rds.com # Replace with your RDS endpoint
+DB_USERNAME=admin # Replace with your RDS username
+DB_PASSWORD=your_password # Replace with your RDS password
 PORT=3306
 
-3. Database Initialization
+------------------------------------------------------------
+
+### Step 3: Install MySQL Client and Initialize Database
 
 sudo yum install mariadb105-server -y
-mysql -h your-rds-endpoint -u admin -p < test.sql
+mysql -h book.rds.com -u admin -p < test.sql
 
-4. Backend Deployment
+------------------------------------------------------------
+
+### Step 4: Backend Deployment
 
 sudo dnf install -y nodejs
 npm install
@@ -101,68 +77,54 @@ pm2 start index.js --name node-app
 pm2 startup
 pm2 save
 
-Backend is now running behind the Application Load Balancer.
+After deployment, attach the backend instance to a target group and verify the response using the backend load balancer.
 
 ------------------------------------------------------------
 
-Frontend Setup
+## 🌐 Frontend Setup
 
-1. Configure Backend API URL
+### Step 1: Clone Repository on Frontend Server
+
+git clone https://github.com/RKVankini/Highly-Available-AWS-Multi-Region-3-Tier-Architecture.git
+
+cd client
+
+------------------------------------------------------------
+
+### Step 2: Update Backend API URL
 
 Edit the following file:
 
 client/src/pages/config.js
 
-Update the API URL:
+Update the API URL: const API_BASE_URL = "http://<backend-load-balancer-dns>";
 
-const API_BASE_URL = "http://<backend-load-balancer-dns>";
 
-2. Build and Deploy Frontend
+------------------------------------------------------------
+
+### Step 3: Frontend Deployment
 
 sudo dnf install -y nodejs
 sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
 
 npm install
 npm run build
 
 sudo cp -r build/* /var/www/html
-sudo systemctl start httpd
-sudo systemctl enable httpd
 
-Frontend is now accessible via the Frontend Load Balancer.
+After this step, attach the frontend instance to the frontend target group and verify the application through the frontend load balancer.
 
 ------------------------------------------------------------
 
-CI/CD Pipeline
+## ✅ Final Output
 
-Jenkins is used to automate build, test, and deployment processes.
-
-Pipeline configurations are available in:
-
-Jenkins-Pipeline-Code/
-
-------------------------------------------------------------
-
-Key Highlights
-
-- Highly Available AWS Architecture
-- Secure Private Subnet Database
-- Infrastructure as Code using Terraform
-- CI/CD Automation with Jenkins
-- Containerized and Kubernetes-ready
-- Real-world production design
+Once all components are configured:
+- Frontend communicates with backend through Load Balancer  
+- Backend connects securely to RDS  
+- Application works as a complete 3-tier setup on AWS  
 
 ------------------------------------------------------------
 
-Learning Outcomes
-
-- AWS Networking and Load Balancing
-- Terraform module-based infrastructure
-- Secure RDS deployment
-- Production-grade Node.js deployment
-- CI/CD pipeline implementation
-- End-to-end DevOps workflow
-
-------------------------------------------------------------
-
-Thank you for exploring this project.
+**Thank you for reading 🙂**
